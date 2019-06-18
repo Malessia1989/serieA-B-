@@ -11,9 +11,11 @@ import it.polito.tdp.seriea.model.Model;
 import it.polito.tdp.seriea.model.Season;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Alert.AlertType;
 
 public class SerieAController {
 
@@ -52,11 +54,20 @@ public class SerieAController {
     	if(sInput !=  null) {
     		String ris=model.getConnessi(sInput);
     		txtResult.setText(ris);
+    	}else {
+    		showAlert("devi selezionare una stagione!");
     	}
 
     }
 
-    @FXML
+    private void showAlert(String message) {
+    	Alert alert = new Alert(AlertType.ERROR);
+		alert.setContentText(message);
+		alert.show();
+		
+	}
+
+	@FXML
     void doSimulaEspulsi(ActionEvent event) {
 
     }

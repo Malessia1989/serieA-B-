@@ -6,6 +6,9 @@ package it.polito.tdp.seriea;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.seriea.model.Model;
+import it.polito.tdp.seriea.model.Season;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,7 +24,7 @@ public class SerieAController {
     private URL location;
 
     @FXML // fx:id="boxSquadra"
-    private ChoiceBox<?> boxSquadra; // Value injected by FXMLLoader
+    private ChoiceBox<Season> boxSquadra; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnCalcolaConnessioniSquadra"
     private Button btnCalcolaConnessioniSquadra; // Value injected by FXMLLoader
@@ -35,13 +38,21 @@ public class SerieAController {
     @FXML // fx:id="txtResult"
     private TextArea txtResult; // Value injected by FXMLLoader
 
+	private Model model;
+
     @FXML
     void doAnalizzaStagioni(ActionEvent event) {
-
+    	model.creaGrafo();
+    	boxSquadra.getItems().addAll(model.getGrafo().vertexSet());
     }
 
     @FXML
     void doCalcolaConnessioniStagione(ActionEvent event) {
+    	Season sInput=boxSquadra.getValue();
+    	if(sInput !=  null) {
+    		String ris=model.getConnessi(sInput);
+    		txtResult.setText(ris);
+    	}
 
     }
 
@@ -59,4 +70,10 @@ public class SerieAController {
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'SerieA.fxml'.";
 
     }
+
+	public void setModel(Model model) {
+		this.model = model;
+			
+		
+	}
 }
